@@ -11,6 +11,7 @@ import NoteForm from "../NoteForm/NoteForm";
 function App() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["notes", query, page],
@@ -21,6 +22,13 @@ function App() {
   const notes = data?.notes || [];
   const totalPages = data?.totalPages ?? 1;
 
+  const handleOpenModal = () => {
+    setIsVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsVisible(false);
+  };
   return (
     <>
       <div className={css.app}>
@@ -31,15 +39,19 @@ function App() {
             page={page}
             onPageChange={setPage}
           />
-          <button className={css.button}>Create note +</button>
+          <button className={css.button} onClick={handleOpenModal}>
+            Create note +
+          </button>
         </header>
         {isLoading && <p>Loading...</p>}
         {isError && <p>Error loading notes</p>}
         {notes.length > 0 && isSuccess && <NoteList notes={notes} />}
       </div>
-      {/* <Modal>
-        <NoteForm />
-      </Modal> */}
+      {isVisible && (
+        <Modal onClose={handleCloseModal}>
+          <NoteForm onClose={handleCloseModal} />
+        </Modal>
+      )}
     </>
   );
 }

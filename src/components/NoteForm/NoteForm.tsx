@@ -15,7 +15,11 @@ const initialValues: InitialValues = {
   tag: "Work",
 };
 
-export default function NoteForm() {
+interface NoteFormProps {
+  onClose: () => void;
+}
+
+export default function NoteForm({ onClose }: NoteFormProps) {
   const handleSubmit = async (
     values: InitialValues,
     actions: FormikHelpers<InitialValues>,
@@ -62,7 +66,11 @@ export default function NoteForm() {
           </div>
 
           <div className={css.actions}>
-            <button type="button" className={css.cancelButton}>
+            <button
+              type="button"
+              className={css.cancelButton}
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className={css.submitButton} disabled={false}>
