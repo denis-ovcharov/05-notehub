@@ -24,7 +24,10 @@ function App() {
   });
 
   const updateQuery = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(e.target.value);
+      setPage(1);
+    },
     1000,
   );
 
@@ -43,11 +46,13 @@ function App() {
       <div className={css.app}>
         <header className={css.toolbar}>
           <SearchBox onSearch={updateQuery} />
-          <Pagination
-            totalPages={totalPages}
-            page={page}
-            onPageChange={setPage}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              page={page}
+              onPageChange={setPage}
+            />
+          )}
           <button className={css.button} onClick={handleOpenModal}>
             Create note +
           </button>
