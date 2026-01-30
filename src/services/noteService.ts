@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Note, NoteTag } from "../types/note";
+import toast from "react-hot-toast";
 
 const NOTEHUB_TOKEN = import.meta.env.VITE_NOTEHUB_TOKEN;
 const URL = "https://notehub-public.goit.study/api/notes";
@@ -22,6 +23,11 @@ export async function fetchNotes(
     },
   };
   const { data } = await axios.request<FetchNotesResponse>(options);
+
+  if (data.notes.length === 0) {
+    toast.error("No matches for your query");
+  }
+
   return {
     notes: data.notes,
     totalPages: data.totalPages,
