@@ -56,3 +56,17 @@ export async function createNote(noteData: NoteData) {
   });
   return data;
 }
+
+interface UpdateNoteVariables {
+  id: string;
+  noteData: NoteData;
+}
+
+export async function updateNote({ id, noteData }: UpdateNoteVariables) {
+  const { data } = await axios.patch<Note>(`${URL}/${id}`, noteData, {
+    headers: {
+      Authorization: `Bearer ${NOTEHUB_TOKEN}`,
+    },
+  });
+  return data;
+}

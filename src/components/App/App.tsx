@@ -11,11 +11,16 @@ import { useDebouncedCallback } from "use-debounce";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import SearchBox from "../SearchBox/SearchBox";
+import EditPostForm from "../EditPostForm/EditPostForm";
+import type { Note } from "../../types/note";
 
 function App() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [isVisible, setIsVisible] = useState(false);
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+
+  type ModalType = "create" | "edit" | null;
+  const [isVisible, setIsVisible] = useState<ModalType>(null);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["notes", query, page],
@@ -34,12 +39,16 @@ function App() {
   const notes = data?.notes || [];
   const totalPages = data?.totalPages ?? 1;
 
-  const handleOpenModal = () => {
-    setIsVisible(true);
+  const handleOpenCreateModal = () => {
+    setIsVisible("create");
+  };
+  const handleOpenEditModal = (note: Note) => {
+    setSelectedNote(note);
+    setIsVisible("edit");
   };
 
   const handleCloseModal = () => {
-    setIsVisible(false);
+    setIsVisible(null);
   };
   return (
     <>
@@ -53,17 +62,24 @@ function App() {
               onPageChange={setPage}
             />
           )}
-          <button className={css.button} onClick={handleOpenModal}>
+          <button className={css.button} onClick={handleOpenCreateModal}>
             Create note +
           </button>
         </header>
         {isLoading && <Loader />}
         {isError && <ErrorMessage />}
-        {notes.length > 0 && isSuccess && <NoteList notes={notes} />}
+        {notes.length > 0 && isSuccess && (
+          <NoteList notes={notes} onEdit={handleOpenEditModal} />
+        )}
       </div>
-      {isVisible && (
+      {isVisible === "create" && (
         <Modal onClose={handleCloseModal}>
           <NoteForm onClose={handleCloseModal} />
+        </Modal>
+      )}
+      {isVisible === "edit" && selectedNote && (
+        <Modal onClose={handleCloseModal}>
+          <EditPostForm note={selectedNote} onClose={handleCloseModal} />
         </Modal>
       )}
       <Toaster position="top-right" />
