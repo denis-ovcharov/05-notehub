@@ -10,7 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { useDebouncedCallback } from "use-debounce";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import SearchBox from "../SearchBox/Searchbox";
+import Searchox from "../SearchBox/Searchox";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -45,7 +45,7 @@ function App() {
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          <SearchBox onSearch={updateQuery} />
+          <Searchox onSearch={updateQuery} />
           {totalPages > 1 && (
             <Pagination
               totalPages={totalPages}

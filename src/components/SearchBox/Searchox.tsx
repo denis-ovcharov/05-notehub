@@ -4,7 +4,7 @@ interface SearchBoxProps {
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function SearchBox({ onSearch }: SearchBoxProps) {
+export default function Searchox({ onSearch }: SearchBoxProps) {
   return (
     <input
       className={css.input}
