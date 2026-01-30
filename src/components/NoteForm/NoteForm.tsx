@@ -25,6 +25,7 @@ interface NoteFormProps {
 
 export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: createNote,
     onSuccess() {

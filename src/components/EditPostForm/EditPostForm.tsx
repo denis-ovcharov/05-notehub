@@ -23,6 +23,7 @@ export default function EditPostForm({ onClose, note }: EditPostFormProps) {
     tag: note.tag,
   };
   const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: updateNote,
     onSuccess: () => {
