@@ -29,7 +29,7 @@ export default function EditPostForm({ onClose, note }: EditPostFormProps) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       onClose();
-      toast.success("Note edited");
+      toast.success("Note edited successfully!");
     },
     onError() {
       toast.error("There was an error");
