@@ -10,7 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { useDebouncedCallback } from "use-debounce";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import SearchBox from "../SearchBox/Searchbox";
+import SearchBox from "../SearchBox/Searchox";
 
 function App() {
   const [query, setQuery] = useState("");
